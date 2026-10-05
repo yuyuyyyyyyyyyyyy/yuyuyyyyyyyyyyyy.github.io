@@ -865,15 +865,8 @@ function frame(now){
   rr(L, T, chipW, chipH, 14);
   cx.fillStyle = 'rgba(13,24,43,0.94)'; cx.fill();
   cx.strokeStyle = 'rgba(110,155,220,0.55)'; cx.lineWidth = 1.2; cx.stroke();
-  /* inner die interconnects */
   var coreW = chipW * 0.44, coreH = chipH * 0.5;
   var cX = W / 2 - coreW / 2, cY = cy - coreH / 2, cR = cX + coreW, cB = cY + coreH;
-  var die = 'rgba(110,150,210,0.28)';
-  dotLine(cX - 26, cY + 14, cX - 6, cY + 14, die, 1, 5); dotLine(cX - 26, cY + 14, cX - 26, T + 20, die, 1, 5);
-  dotLine(cX - 26, cB - 14, cX - 6, cB - 14, die, 1, 5); dotLine(cX - 26, cB - 14, cX - 26, B - 20, die, 1, 5);
-  dotLine(cR + 6, cY + 14, cR + 26, cY + 14, die, 1, 5); dotLine(cR + 26, cY + 14, cR + 26, T + 20, die, 1, 5);
-  dotLine(cR + 6, cB - 14, cR + 26, cB - 14, die, 1, 5); dotLine(cR + 26, cB - 14, cR + 26, B - 20, die, 1, 5);
-  dotLine(W / 2, cY - 22, W / 2, cY - 6, die, 1, 5); dotLine(W / 2, cB + 6, W / 2, cB + 22, die, 1, 5);
   /* corner screws */
   [[L + 14, T + 14], [R - 14, T + 14], [L + 14, B - 14], [R - 14, B - 14]].forEach(function(s2){
     cx.strokeStyle = 'rgba(126,166,224,0.6)'; cx.lineWidth = 1.1;
@@ -915,10 +908,10 @@ function frame(now){
   /* status LED */
   var on = (Math.sin(t * 2.4) > -0.2);
   cx.fillStyle = on ? 'rgba(84,220,160,0.95)' : 'rgba(84,220,160,0.25)';
-  cx.beginPath(); cx.arc(R - 18, T + 18, 3.4, 0, 6.2832); cx.fill();
+  cx.beginPath(); cx.arc(R - 30, T + 18, 3.4, 0, 6.2832); cx.fill();
   cx.font = '600 10px "D-DIN", Arial, sans-serif'; cx.textAlign = 'right';
   cx.fillStyle = 'rgba(159,180,205,0.85)';
-  cx.fillText('READY', R - 28, T + 22);
+  cx.fillText('READY', R - 40, T + 22);
   cx.textAlign = 'center';
   cx.font = '600 12px "D-DIN", Arial, sans-serif';
   cx.fillStyle = 'rgba(210,222,238,0.92)';
