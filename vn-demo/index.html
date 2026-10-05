@@ -914,11 +914,44 @@ function frame(now){
   cx.font = '600 12px "D-DIN", Arial, sans-serif';
   cx.fillStyle = 'rgba(210,222,238,0.92)';
   cx.fillText('ON-DEVICE MODEL', W / 2, B + 46);
-  /* ---- packets on the main channels + a rare cloud packet ---- */
-  var cyc = t % 4.2;
-  if (cyc < 1.1) glowDot(packet(inMain, cyc / 1.1), 'rgba(120,190,255,0.30)', 'rgba(190,225,255,0.98)');
-  else if (cyc < 2.2) glowDot(packet(outMain, (cyc - 1.1) / 1.1), 'rgba(170,130,255,0.30)', 'rgba(220,200,255,0.98)');
-  else if (cyc > 3.5) glowDot(packet(cloudTr, (cyc - 3.5) / 0.7), 'rgba(120,190,255,0.22)', 'rgba(190,225,255,0.8)');
+  /* the current: a stream of little light bars flowing along the channel */
+  function pathLen(pts){
+    var s = 0, i2;
+    for (i2 = 0; i2 < pts.length - 1; i2++) s += Math.hypot(pts[i2 + 1][0] - pts[i2][0], pts[i2 + 1][1] - pts[i2][1]);
+    return s;
+  }
+  function pointAt(pts, s){
+    var i2;
+    for (i2 = 0; i2 < pts.length - 1; i2++){
+      var d = Math.hypot(pts[i2 + 1][0] - pts[i2][0], pts[i2 + 1][1] - pts[i2][1]);
+      if (s <= d){
+        var f = d ? s / d : 0;
+        return [pts[i2][0] + (pts[i2 + 1][0] - pts[i2][0]) * f, pts[i2][1] + (pts[i2 + 1][1] - pts[i2][1]) * f];
+      }
+      s -= d;
+    }
+    return pts[pts.length - 1];
+  }
+  function current(pts, ph, core, glow){
+    var tot = pathLen(pts), head = ph * (tot + 90) - 45, k, s, a, b;
+    cx.lineCap = 'round';
+    for (k = 0; k < 8; k++){
+      s = head - k * 11;
+      if (s < 0 || s > tot - 6) continue;
+      a = pointAt(pts, s); b = pointAt(pts, s + 6.5);
+      var al = 1 - k * 0.12;
+      cx.strokeStyle = glow.replace('A', (0.30 * al).toFixed(2));
+      cx.lineWidth = 5.5;
+      cx.beginPath(); cx.moveTo(a[0], a[1]); cx.lineTo(b[0], b[1]); cx.stroke();
+      cx.strokeStyle = core.replace('A', (0.98 * al).toFixed(2));
+      cx.lineWidth = 2.4;
+      cx.beginPath(); cx.moveTo(a[0], a[1]); cx.lineTo(b[0], b[1]); cx.stroke();
+    }
+  }
+  var cyc2 = t % 3.6;
+  if (cyc2 < 1.5) current(inMain, cyc2 / 1.5, 'rgba(200,232,255,A)', 'rgba(110,185,255,A)');
+  else if (cyc2 < 3.0) current(outMain, (cyc2 - 1.5) / 1.5, 'rgba(226,208,255,A)', 'rgba(168,128,255,A)');
+  else if (cyc2 > 3.25) current(cloudTr, (cyc2 - 3.25) / 0.7, 'rgba(200,232,255,A)', 'rgba(110,185,255,A)');
   requestAnimationFrame(frame);
 }
 var seen = false;
