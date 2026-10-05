@@ -29,6 +29,7 @@ nav.main{display:flex;gap:32px;font-size:16px}
 .getstarted,.btn.solid,h1 .bl{box-shadow:inset 0 1px 0 rgba(255,255,255,.55),inset 0 -10px 16px rgba(10,20,60,.18),0 0 22px rgba(70,160,255,.30),0 0 48px rgba(150,80,255,.14)}
 .getstarted,.btn.solid{box-shadow:inset 0 1px 0 rgba(255,255,255,.55),inset 0 -10px 16px rgba(10,20,60,.18),0 0 22px rgba(70,160,255,.30),0 0 48px rgba(150,80,255,.14)}
 .getstarted::before,.btn.solid::before,h1 .bl::before{content:'';position:absolute;inset:-8px;background:radial-gradient(55% 80% at 20% 15%,rgba(255,255,255,.38),rgba(255,255,255,0) 60%),radial-gradient(50% 75% at 82% 88%,rgba(255,255,255,.26),rgba(255,255,255,0) 60%);pointer-events:none}
+h1 .bl::before{background:radial-gradient(55% 80% at 20% 15%,rgba(255,255,255,.14),rgba(255,255,255,0) 60%),radial-gradient(50% 75% at 82% 88%,rgba(255,255,255,.09),rgba(255,255,255,0) 60%)}
 .getstarted::before,.btn.solid::before{background:radial-gradient(54% 95% at 20% 76%,rgba(255,178,90,.32),rgba(255,178,90,0) 72%),radial-gradient(56% 100% at 52% 72%,rgba(90,225,255,.28),rgba(90,225,255,0) 72%),radial-gradient(54% 95% at 84% 76%,rgba(200,95,255,.26),rgba(200,95,255,0) 72%);filter:blur(7px)}
 .bdots{position:absolute;inset:0;line-height:0;pointer-events:none}
 .bdots svg{width:100%;height:100%;display:block}
@@ -121,6 +122,30 @@ h1 .ol{position:relative;color:transparent}
 .nextbtn{background:linear-gradient(95deg,#34a5f5,#2f6fd0 55%,#7a4fd0);color:#fff;border:none;border-radius:6px;padding:9px 20px;font-size:13.5px;font-weight:700;cursor:pointer;font-family:inherit;flex:none;box-shadow:0 0 22px rgba(70,160,255,.30),0 0 48px rgba(150,80,255,.14)}
 .nextbtn:hover{filter:brightness(1.08)}
 @media (max-width:900px){.gcard{padding:28px 24px}.gc-text{font-size:18.5px}}
+
+.edge{border-top:1px solid var(--line)}
+.edge-in{max-width:1440px;margin:0 auto;padding:96px 32px}
+.edge-title{font-size:clamp(30px,3.6vw,48px);font-weight:700;line-height:1.12;text-transform:uppercase;letter-spacing:.005em}
+.edge-lead{margin-top:20px;font-size:18px;line-height:1.6;color:var(--body);max-width:680px}
+
+
+.edge-foot{margin-top:28px;font-size:13.5px;letter-spacing:.06em;color:var(--body)}
+.edge-foot b{color:var(--ink);font-weight:700}
+
+.edge{border-top:1px solid var(--line)}
+.edge-in{max-width:1440px;margin:0 auto;padding:96px 32px}
+.edge-title{font-size:clamp(30px,3.6vw,48px);font-weight:700;line-height:1.12;text-transform:uppercase;letter-spacing:.005em}
+.edge-lead{margin-top:20px;font-size:18px;line-height:1.6;color:var(--body);max-width:680px}
+.edge-foot{margin-top:28px;font-size:13.5px;letter-spacing:.06em;color:var(--body)}
+.edge-foot b{color:var(--ink);font-weight:700}
+
+.chipstage{position:relative;margin-top:44px}
+.chipstage canvas{display:block;width:100%;height:380px}
+.chipcaps{display:grid;grid-template-columns:repeat(5,1fr);gap:24px;margin-top:8px;padding-top:22px;border-top:1px solid var(--line)}
+.chipcap .k{font-size:11.5px;letter-spacing:.18em;color:var(--body);text-transform:uppercase}
+.chipcap .v{margin-top:8px;font-size:20px;font-weight:700;color:var(--ink);font-variant-numeric:tabular-nums}
+.chipcap .n{margin-top:6px;font-size:13.5px;line-height:1.5;color:var(--body)}
+@media (max-width:900px){.chipcaps{grid-template-columns:1fr 1fr}.chipstage canvas{height:300px}}
 </style>
 </head>
 <body>
@@ -161,6 +186,22 @@ h1 .ol{position:relative;color:transparent}
 </div>
 </div>
 </div></section>
+
+<section class="edge"><div class="edge-in">
+<div class="eyebrow"><i></i>Edge&#8211;Cloud Synergy</div>
+<h2 class="edge-title">On the device. Off the cloud.</h2>
+<p class="edge-lead">The same voice never has to leave the phone. Our on-device ASR and TTS run fully offline, with seamless switchover between edge and cloud &#8212; so the session holds even as the network drops.</p>
+<div class="chipstage"><canvas id="chipC" aria-label="Circuit traces feeding an on-device speech chip"></canvas></div>
+<div class="chipcaps">
+<div class="chipcap"><div class="k">Latency</div><div class="v">&lt;300ms</div><div class="n">Response time, measured on-device.</div></div>
+<div class="chipcap"><div class="k">Footprint</div><div class="v">~50MB</div><div class="n">Model size, compressed for entry-level hardware.</div></div>
+<div class="chipcap"><div class="k">Offline</div><div class="v">Always on</div><div class="n">Full inference with no network at all.</div></div>
+<div class="chipcap"><div class="k">Fallback</div><div class="v">Edge to Cloud</div><div class="n">Seamless switch mid-session; nothing restarts.</div></div>
+<div class="chipcap"><div class="k">Cost</div><div class="v">$0 per call</div><div class="n">No per-call cloud bill &#8212; inference runs on the user&#8217;s device.</div></div>
+</div>
+<p class="edge-foot"><b>MediaTek</b> official technology partner &#183; optimised for entry-level chips like the G81 &#183; Racing mode: edge and cloud answer in parallel, fastest response wins</p>
+</div></section>
+
 
 <script>const capName = document.getElementById('capName'), capSub = document.getElementById('capSub'), capEl = capName.parentElement;
 const h1El = document.querySelector('h1');
@@ -715,6 +756,180 @@ if ('IntersectionObserver' in window){
     else if (!vis) waveVisible = false;
   }, { threshold: 0.05 }).observe(waveCv);
 } else { waveVisible = true; waveRaf = requestAnimationFrame(waveFrame); }
+</script>
+
+<script>
+/* ---- chip stage: circuit traces feeding an on-device core ---- */
+(function(){
+var cv = document.getElementById('chipC'); if (!cv) return;
+var cx = cv.getContext('2d');
+var W = 0, H = 0, dpr = Math.min(2, window.devicePixelRatio || 1);
+function resize(){
+  var r = cv.getBoundingClientRect();
+  W = r.width; H = r.height;
+  cv.width = Math.round(W * dpr); cv.height = Math.round(H * dpr);
+  cx.setTransform(dpr, 0, 0, dpr, 0, 0);
+}
+window.addEventListener('resize', resize); resize();
+function rr(x, y, w, h, r){
+  cx.beginPath();
+  cx.moveTo(x + r, y); cx.lineTo(x + w - r, y); cx.arcTo(x + w, y, x + w, y + r, r);
+  cx.lineTo(x + w, y + h - r); cx.arcTo(x + w, y + h, x + w - r, y + h, r);
+  cx.lineTo(x + r, y + h); cx.arcTo(x, y + h, x, y + h - r, r);
+  cx.lineTo(x, y + r); cx.arcTo(x, y, x + r, y, r); cx.closePath();
+}
+function dotLine(x1, y1, x2, y2, col, rad, step){
+  var d = Math.hypot(x2 - x1, y2 - y1), n = Math.max(2, Math.round(d / (step || 6)));
+  cx.fillStyle = col;
+  for (var i = 0; i <= n; i++){
+    cx.beginPath(); cx.arc(x1 + (x2 - x1) * i / n, y1 + (y2 - y1) * i / n, rad || 1.2, 0, 6.2832); cx.fill();
+  }
+}
+function tracePath(pts, col, rad){
+  for (var i = 0; i < pts.length - 1; i++) dotLine(pts[i][0], pts[i][1], pts[i + 1][0], pts[i + 1][1], col, rad);
+}
+function node(x, y){
+  cx.strokeStyle = 'rgba(126,166,224,0.9)'; cx.lineWidth = 1.3;
+  cx.beginPath(); cx.arc(x, y, 4.2, 0, 6.2832); cx.stroke();
+  cx.fillStyle = 'rgba(126,166,224,0.95)';
+  cx.beginPath(); cx.arc(x, y, 1.7, 0, 6.2832); cx.fill();
+}
+function packet(pts, pt){
+  var lens = [], tot = 0, i2;
+  for (i2 = 0; i2 < pts.length - 1; i2++){
+    var d = Math.hypot(pts[i2 + 1][0] - pts[i2][0], pts[i2 + 1][1] - pts[i2][1]);
+    lens.push(d); tot += d;
+  }
+  var s = pt * tot;
+  for (i2 = 0; i2 < lens.length; i2++){
+    if (s <= lens[i2]){
+      var f = lens[i2] ? s / lens[i2] : 0;
+      return [pts[i2][0] + (pts[i2 + 1][0] - pts[i2][0]) * f, pts[i2][1] + (pts[i2 + 1][1] - pts[i2][1]) * f];
+    }
+    s -= lens[i2];
+  }
+  return pts[pts.length - 1];
+}
+function glowDot(p, colA, colB){
+  cx.fillStyle = colA;
+  cx.beginPath(); cx.arc(p[0], p[1], 6.5, 0, 6.2832); cx.fill();
+  cx.fillStyle = colB;
+  cx.beginPath(); cx.arc(p[0], p[1], 2.4, 0, 6.2832); cx.fill();
+}
+function frame(now){
+  var t = now * 0.001;
+  cx.clearRect(0, 0, W, H);
+  var cy = H * 0.48;
+  var chipW = Math.min(320, W * 0.32), chipH = chipW * 0.66;
+  var L = W / 2 - chipW / 2, R = L + chipW, T = cy - chipH / 2, B = T + chipH;
+  var faint = 'rgba(110,150,210,0.35)', mid = 'rgba(110,150,210,0.5)';
+  /* ---- traces: several channels on every side ---- */
+  var inMain  = [[30, cy], [L - 60, cy], [L - 60, cy], [L - 18, cy]];
+  var inAux1  = [[90, cy - 118], [L - 96, cy - 118], [L - 96, cy - 40], [L - 18, cy - 40]];
+  var inAux2  = [[120, cy + 122], [L - 80, cy + 122], [L - 80, cy + 44], [L - 18, cy + 44]];
+  var outMain = [[R + 18, cy - 30], [R + 66, cy - 30], [R + 66, cy - 78], [W - 170, cy - 78]];
+  var outAux  = [[R + 18, cy - 62], [R + 96, cy - 62], [R + 96, cy - 122], [W - 260, cy - 122]];
+  var cloudTr = [[R + 18, cy + 34], [R + 54, cy + 34], [R + 54, cy + 88], [W - 210, cy + 88]];
+  var auxBot  = [[L + 60, B + 18], [L + 60, B + 58], [L - 30, B + 58]];
+  var auxTop  = [[R - 60, T - 18], [R - 60, T - 54], [R + 40, T - 54]];
+  tracePath(inAux1, faint, 1.1); tracePath(inAux2, faint, 1.1);
+  tracePath(outAux, faint, 1.1); tracePath(auxBot, faint, 1.1); tracePath(auxTop, faint, 1.1);
+  tracePath(inMain, mid, 1.3); tracePath(outMain, mid, 1.3); tracePath(cloudTr, mid, 1.3);
+  node(30, cy); node(W - 158, cy - 78); node(W - 198, cy + 88);
+  node(90, cy - 118); node(120, cy + 122); node(W - 248, cy - 122);
+  cx.font = '600 11.5px "D-DIN", Arial, sans-serif'; cx.textAlign = 'left';
+  cx.fillStyle = 'rgba(159,180,205,0.9)';
+  cx.fillText('VOICE IN', 30, cy - 16);
+  cx.fillText('SPEECH OUT', W - 158, cy - 94);
+  cx.fillText('TO CLOUD (FALLBACK)', W - 198, cy + 110);
+  /* ---- dense fine pins, all four sides ---- */
+  var pinCol = 'rgba(126,166,224,0.8)', px, py;
+  for (px = L + 16; px < R - 8; px += 13){
+    dotLine(px, T - 3, px, T - 13, pinCol, 1.1, 4);
+    dotLine(px, B + 3, px, B + 13, pinCol, 1.1, 4);
+  }
+  for (py = T + 16; py < B - 8; py += 13){
+    dotLine(L - 3, py, L - 13, py, pinCol, 1.1, 4);
+    dotLine(R + 3, py, R + 13, py, pinCol, 1.1, 4);
+  }
+  /* ---- chip body ---- */
+  rr(L, T, chipW, chipH, 14);
+  cx.fillStyle = 'rgba(13,24,43,0.94)'; cx.fill();
+  cx.strokeStyle = 'rgba(110,155,220,0.55)'; cx.lineWidth = 1.2; cx.stroke();
+  /* inner die interconnects */
+  var coreW = chipW * 0.44, coreH = chipH * 0.5;
+  var cX = W / 2 - coreW / 2, cY = cy - coreH / 2, cR = cX + coreW, cB = cY + coreH;
+  var die = 'rgba(110,150,210,0.28)';
+  dotLine(cX - 26, cY + 14, cX - 6, cY + 14, die, 1, 5); dotLine(cX - 26, cY + 14, cX - 26, T + 20, die, 1, 5);
+  dotLine(cX - 26, cB - 14, cX - 6, cB - 14, die, 1, 5); dotLine(cX - 26, cB - 14, cX - 26, B - 20, die, 1, 5);
+  dotLine(cR + 6, cY + 14, cR + 26, cY + 14, die, 1, 5); dotLine(cR + 26, cY + 14, cR + 26, T + 20, die, 1, 5);
+  dotLine(cR + 6, cB - 14, cR + 26, cB - 14, die, 1, 5); dotLine(cR + 26, cB - 14, cR + 26, B - 20, die, 1, 5);
+  dotLine(W / 2, cY - 22, W / 2, cY - 6, die, 1, 5); dotLine(W / 2, cB + 6, W / 2, cB + 22, die, 1, 5);
+  /* corner screws */
+  [[L + 14, T + 14], [R - 14, T + 14], [L + 14, B - 14], [R - 14, B - 14]].forEach(function(s2){
+    cx.strokeStyle = 'rgba(126,166,224,0.6)'; cx.lineWidth = 1.1;
+    cx.beginPath(); cx.moveTo(s2[0] - 4, s2[1]); cx.lineTo(s2[0] + 4, s2[1]);
+    cx.moveTo(s2[0], s2[1] - 4); cx.lineTo(s2[0], s2[1] + 4); cx.stroke();
+  });
+  /* HUD brackets */
+  cx.strokeStyle = 'rgba(120,175,245,0.8)'; cx.lineWidth = 1.6;
+  var cL = 18;
+  cx.beginPath();
+  cx.moveTo(L - 30, T - 10); cx.lineTo(L - 30, T - 30); cx.lineTo(L - 10, T - 30);
+  cx.moveTo(R + 10, T - 30); cx.lineTo(R + 30, T - 30); cx.lineTo(R + 30, T - 10);
+  cx.moveTo(R + 30, B + 10); cx.lineTo(R + 30, B + 30); cx.lineTo(R + 10, B + 30);
+  cx.moveTo(L - 10, B + 30); cx.lineTo(L - 30, B + 30); cx.lineTo(L - 30, B + 10);
+  cx.stroke();
+  /* ---- core ---- */
+  var pulse = 0.10 + 0.05 * (0.5 + 0.5 * Math.sin(t * 2.0));
+  var rg = cx.createRadialGradient(W / 2, cy, 4, W / 2, cy, coreW * 0.8);
+  rg.addColorStop(0, 'rgba(90,160,245,' + pulse.toFixed(3) + ')');
+  rg.addColorStop(1, 'rgba(90,160,245,0)');
+  cx.fillStyle = rg;
+  cx.fillRect(cX - coreW * 0.35, cY - coreH * 0.35, coreW * 1.7, coreH * 1.7);
+  rr(cX, cY, coreW, coreH, 8);
+  var lg = cx.createLinearGradient(cX, cY, cR, cB);
+  lg.addColorStop(0, '#34a5f5'); lg.addColorStop(0.55, '#2f6fd0'); lg.addColorStop(1, '#7a4fd0');
+  cx.fillStyle = 'rgba(18,32,56,0.96)'; cx.fill();
+  cx.strokeStyle = lg; cx.lineWidth = 1.6; cx.stroke();
+  cx.font = '700 13px "D-DIN", Arial, sans-serif'; cx.textAlign = 'center';
+  cx.fillStyle = 'rgba(226,238,252,0.96)';
+  cx.fillText('VN CORE', W / 2, cy - 2);
+  cx.font = '500 10px "D-DIN", Arial, sans-serif';
+  cx.fillStyle = 'rgba(159,180,205,0.9)';
+  cx.fillText('ASR + TTS', W / 2, cy + 14);
+  cx.font = '600 9.5px "D-DIN", Arial, sans-serif'; cx.textAlign = 'left';
+  cx.fillStyle = 'rgba(159,180,205,0.75)';
+  cx.fillText('VN-EDGE', L + 26, T + 24);
+  cx.textAlign = 'right';
+  cx.fillText('REV 2.1', R - 44, B - 16);
+  /* status LED */
+  var on = (Math.sin(t * 2.4) > -0.2);
+  cx.fillStyle = on ? 'rgba(84,220,160,0.95)' : 'rgba(84,220,160,0.25)';
+  cx.beginPath(); cx.arc(R - 18, T + 18, 3.4, 0, 6.2832); cx.fill();
+  cx.font = '600 10px "D-DIN", Arial, sans-serif'; cx.textAlign = 'right';
+  cx.fillStyle = 'rgba(159,180,205,0.85)';
+  cx.fillText('READY', R - 28, T + 22);
+  cx.textAlign = 'center';
+  cx.font = '600 12px "D-DIN", Arial, sans-serif';
+  cx.fillStyle = 'rgba(210,222,238,0.92)';
+  cx.fillText('ON-DEVICE MODEL', W / 2, B + 46);
+  /* ---- packets on the main channels + a rare cloud packet ---- */
+  var cyc = t % 4.2;
+  if (cyc < 1.1) glowDot(packet(inMain, cyc / 1.1), 'rgba(120,190,255,0.30)', 'rgba(190,225,255,0.98)');
+  else if (cyc < 2.2) glowDot(packet(outMain, (cyc - 1.1) / 1.1), 'rgba(170,130,255,0.30)', 'rgba(220,200,255,0.98)');
+  else if (cyc > 3.5) glowDot(packet(cloudTr, (cyc - 3.5) / 0.7), 'rgba(120,190,255,0.22)', 'rgba(190,225,255,0.8)');
+  requestAnimationFrame(frame);
+}
+var seen = false;
+if ('IntersectionObserver' in window){
+  new IntersectionObserver(function(es){
+    es.forEach(function(e){
+      if (e.isIntersecting && !seen){ seen = true; requestAnimationFrame(frame); }
+    });
+  }, { threshold: 0.05 }).observe(cv);
+} else { requestAnimationFrame(frame); }
+})();
 </script>
 </body>
 </html>
