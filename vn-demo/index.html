@@ -705,6 +705,7 @@ const CASES = [
     text: 'Markets. Bus stations. Street corners. It is never quiet where these languages live.' }
 ];
 const gcPills = document.getElementById('gcPills');
+setInterval(() => { const el = document.getElementById('gcProg'); if (el && window.__caseT0) el.style.width = Math.min(100, (performance.now() - window.__caseT0) / 90) + '%'; }, 100);
 const gcText = document.getElementById('gcText');
 const gcFix = document.getElementById('gcFix');
 let curCase = 0, caseTimer = null;
@@ -727,7 +728,6 @@ function restartCaseTimer(){
 }
 document.getElementById('gcNext').addEventListener('click', () => { setCase((curCase + 1) % CASES.length); restartCaseTimer(); });
 setCase(0); restartCaseTimer();
-setInterval(() => { const el = document.getElementById('gcProg'); if (el && window.__caseT0) el.style.width = Math.min(100, (performance.now() - window.__caseT0) / 90) + '%'; }, 100);
 
 /* three strands of light, travelling like a sound wave through the night street */
 const waveCv = document.getElementById('dotwave');
@@ -802,12 +802,12 @@ function waveFrame(now){
       const uW = u + undP * 130 * Math.sin(u * 0.0042 + 1.7);
       const envB = Math.pow(burstEnv(((uW % PER) + PER) % PER), 1.35);
       const swf = Math.min(1, Math.max(0, (x - W * 0.26) / 50)) * swP;
-      const ph = uW * 0.55 * (1 + 0.9 * swf) + swf * 2.0;
+      const ph = uW * 0.55 + swf * 2.0;
       const nz = Math.sin(u * 2.9 + now * 0.020) * 0.6 + Math.sin(u * 7.7 - now * 0.017) * 0.4;
       const swell = 1 + undP * cf * 0.50 * Math.sin(u * 0.0035 + 2.2);
-      const offBefore = envB * AMP2 * (Math.sin(ph) * 0.85 + Math.sin(ph * 2.4 + 1.2) * 0.30) * (1 - 0.35 * swf) * swell + jitP * nz * (2.5 + 9 * (1 - envB));
+      const offBefore = envB * AMP2 * (Math.sin(ph) * 0.85 + Math.sin(ph * 2.4 + 1.2) * 0.30) * (1 - 0.20 * swf) * swell + jitP * nz * (2.5 + 9 * (1 - envB));
       const hx = ((Math.sin(x * 12.9898) * 43758.5453) % 1 + 1) % 1;
-      const seamDrop = swP * cf > 0.5 && Math.abs(x - W * 0.26) < 5;
+      const seamDrop = false;
       const flatGap = jitP * cf > 0.3 && hx < 0.24 * jitP * cf;
       return { y: flatGap ? H / 2 : H / 2 + offAfter + (offBefore - offAfter) * cf, drop: seamDrop, j: jitP * nz * 3 };
     };
