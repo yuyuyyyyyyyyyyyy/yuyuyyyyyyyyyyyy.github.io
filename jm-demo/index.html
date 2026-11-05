@@ -4,8 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>北岸设备技术回收系统 · 交互原型</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Noto+Sans+SC:wght@400;500;700&display=swap" rel="stylesheet">
+
 <style>
 :root{
   --bg:#070b14; --panel:#0e1524; --panel2:#121b2e; --line:#1f2b44; --line2:#2a3a5c;
@@ -330,7 +329,18 @@ nav .foot span{color:#fff !important}
 body{text-shadow:0 1px 2px rgba(30,40,55,.25)}
 .btn-p,.tab.on{text-shadow:none}
 </style>
-</head>
+<style>
+:root{--sans:'Microsoft YaHei','PingFang SC',sans-serif;--mono:Consolas,monospace;--dim:rgba(255,255,255,.72);--sub:rgba(255,255,255,.86);--glass:blur(36px) saturate(130%)}
+#bgfx{background:radial-gradient(ellipse at 16% 80%,#70697e,transparent 62%),linear-gradient(145deg,#293a54,#607481 56%,#a5958e)}
+#bgfx i{animation:none;opacity:.45}#bgfx i:nth-child(1){background:#a7c6d0}#bgfx i:nth-child(2){background:#9d91af}#bgfx i:nth-child(3){background:#bc9c93}
+#sys{grid-template-columns:218px 1fr;padding:22px;gap:20px;grid-template-rows:70px minmax(0,1fr)}
+header,nav,.card,.clause,.voice,.route{background:linear-gradient(128deg,rgba(243,247,255,.18),rgba(23,37,57,.23))!important;border-color:rgba(255,255,255,.27)!important;box-shadow:inset 0 1px 0 #ffffff75,0 18px 45px #18243824}
+nav{padding-top:30px}nav a{font-size:14px;padding:15px 11px;margin-bottom:7px}main{padding:20px 12px 50px}h1{font-size:30px;font-weight:500;letter-spacing:.04em}.lead{margin-bottom:30px;font-size:14px}.card{padding:26px;border-radius:24px}.card h3{color:#fff;font-size:16px;margin-bottom:24px}.card h3::before{display:none}.grid{gap:22px}.kv{row-gap:19px}.crumb{letter-spacing:.12em;font-size:10px;margin-bottom:12px}.logo{font-size:16px}.logo small{font-size:10px}th{color:#e0e6ed}.thumb{border-radius:18px}.thumb::before{content:'';position:absolute;width:55%;height:65%;left:24%;top:16%;border-radius:50% 50% 18% 18%;background:linear-gradient(100deg,#ffffff16,#ffffff04);filter:blur(12px)}
+button:focus-visible,a:focus-visible,input:focus-visible{outline:2px solid #fff;outline-offset:4px}.row{flex-wrap:wrap}.tabs{flex-wrap:wrap}.tab{font-size:13px;padding:11px 13px}.voice>div[style]{width:min(300px,45%)!important}.voice .wave{min-width:40px}
+#director{position:fixed;right:24px;bottom:20px;z-index:80;display:flex;gap:7px;padding:8px;border:1px solid #ffffff40;border-radius:999px;background:#233248d9;backdrop-filter:blur(20px)}#director button{background:transparent;color:white;border:0;border-radius:20px;padding:8px 12px;font-size:12px}#director button:hover{background:#ffffff20}#hint{display:none}body.capture #director{display:none}body.capture{cursor:none}body.editing [data-edit]{outline:1px dashed #b3e8ec;outline-offset:4px}#editnotice{display:none;position:fixed;bottom:80px;right:30px;z-index:81;background:#233248;padding:12px;border-radius:12px;font-size:12px}body.editing #editnotice{display:block}
+@media(max-width:900px){#sys{grid-template-columns:1fr;grid-template-rows:64px auto minmax(0,1fr);padding:10px;gap:10px}nav{padding:8px;flex-wrap:nowrap}nav a{margin:0}main{padding:16px 4px 75px}.hd-right{gap:6px}.logo{font-size:13px}.logo small{font-size:8px}#clock{display:none}.g2{grid-template-columns:1fr}.card{padding:20px}.dev-head{flex-wrap:wrap}.kv{grid-template-columns:110px 1fr}.s-main{padding:16px}.s-top{padding:12px;flex-wrap:wrap}.s-rel{grid-template-columns:repeat(2,1fr)}#director{right:10px;bottom:10px}.tabs{border-radius:18px}.card{overflow-x:auto}}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}}
+</style></head>
 <body>
 
 <div id="bgfx"><i></i><i></i><i></i><i></i></div>
@@ -614,7 +624,7 @@ function mask(on,silent){
   masked=on; document.getElementById('shop').classList.toggle('on',on);
 }
 document.addEventListener('keydown',e=>{
-  if(e.target.matches('input,textarea'))return;
+  if(e.target.matches('input,textarea,select,[contenteditable=true]'))return;
   if(e.key==='Escape') mask(!masked);
   if(['1','2','3','4'].includes(e.key)){ mask(false); location.hash='p'+e.key; }
 });
@@ -649,17 +659,36 @@ document.getElementById('inspect').onclick=()=>{
 };
 
 // 04 清除
+let wipeRunning=false;
 document.getElementById('wipe').onclick=()=>{
+  if(wipeRunning)return;
   if(!document.getElementById('agree').checked){toast('请先勾选同意条款');return;}
+  wipeRunning=true;document.getElementById('wipe').disabled=true;
   const rows=[...document.querySelectorAll('#wipeTbl tr')].slice(1,6);let p=0;
   const bar=document.getElementById('barI'),pct=document.getElementById('pct');
   const iv=setInterval(()=>{p+=1;bar.style.width=p+'%';pct.textContent=p+'%';
     const k=Math.floor(p/20);rows.forEach((r,i)=>{if(i<k)r.cells[2].innerHTML='<span class="tag t-red">已清除</span>';else if(i===k)r.cells[2].innerHTML='<span class="tag t-warn">清除中…</span>'});
-    if(p>=100){clearInterval(iv);toast('私人数据已清除 · 基础控制系统已保留');}
+    if(p>=100){clearInterval(iv);document.getElementById('wipe').textContent='私人数据已清除';toast('私人数据已清除 · 基础控制系统已保留');}
   },45);
 };
 
 route();
 </script>
-</body>
+<div id="director"><button id="editcopy">编辑文案</button><button id="exportcopy">导出文案</button><button id="resetdemo">重置演示</button><button id="capture">拍摄模式</button></div><div id="editnotice">点击文字修改，退出编辑后自动保存到本机。</div>
+<script>
+const editNodes=[...document.querySelectorAll('h1,h3,.lead,.kv dd,.tl .d,.clause,.s-info h2')];
+let saved={};try{saved=JSON.parse(localStorage.getItem('jm-copy-v2')||'{}')}catch{}
+editNodes.forEach((el,i)=>{el.dataset.edit=i;if(saved[i]!==undefined)el.textContent=saved[i]});
+let editing=false;document.getElementById('editcopy').onclick=()=>{editing=!editing;document.body.classList.toggle('editing',editing);editNodes.forEach(el=>el.contentEditable=editing);document.getElementById('editcopy').textContent=editing?'保存文案':'编辑文案';if(!editing){const data={};editNodes.forEach((el,i)=>data[i]=el.textContent);try{localStorage.setItem('jm-copy-v2',JSON.stringify(data));toast('文案已保存在本机')}catch{toast('本机保存不可用，请导出文案')}}};
+document.getElementById('exportcopy').onclick=()=>{const text=editNodes.map(el=>el.textContent).join('\n\n');const url=URL.createObjectURL(new Blob([text],{type:'text/plain;charset=utf-8'}));const a=document.createElement('a');a.href=url;a.download='既明-界面文案.txt';a.click();setTimeout(()=>URL.revokeObjectURL(url),500)};
+document.getElementById('capture').onclick=()=>{document.body.classList.add('capture');toast('拍摄模式 · 按 H 恢复工具栏')};
+document.addEventListener('keydown',e=>{if(e.target.isContentEditable||e.target.matches('input,textarea,select'))return;if(e.key.toLowerCase()==='h')document.body.classList.toggle('capture')});
+document.getElementById('resetdemo').onclick=()=>location.reload();
+const draft=[...document.querySelectorAll('button')].find(b=>b.textContent==='保存草稿');if(draft)draft.onclick=()=>{const fields=[...document.querySelectorAll('#p1 input,#p1 select,#p1 textarea')].map(el=>el.value);try{localStorage.setItem('jm-draft',JSON.stringify(fields));toast('申请草稿已保存到本机')}catch{toast('当前浏览器无法保存草稿')}};
+try{const fields=JSON.parse(localStorage.getItem('jm-draft')||'null');if(fields)document.querySelectorAll('#p1 input,#p1 select,#p1 textarea').forEach((el,i)=>{if(fields[i]!==undefined)el.value=fields[i]})}catch{}
+const back=[...document.querySelectorAll('#p4 button')].find(b=>b.textContent==='返回');if(back)back.onclick=()=>location.hash='p3';
+document.querySelectorAll('.tog').forEach((el,i)=>{el.setAttribute('aria-label',['主动问候','情绪识别与安抚','长期记忆','称呼偏好'][i]);el.setAttribute('role','switch');el.setAttribute('aria-checked',el.classList.contains('on'));el.addEventListener('click',()=>el.setAttribute('aria-checked',el.classList.contains('on')))});
+document.querySelectorAll('.play').forEach(el=>{el.setAttribute('aria-label','预览语音波形');el.addEventListener('click',()=>toast('语音波形演示，尚未配置实际录音'))});
+document.querySelector('.s-search button').onclick=()=>toast('剧情商城演示：已显示关节伺服电机');document.querySelector('.s-cart').onclick=()=>toast('演示：已加入购物车');document.querySelector('.s-buy').onclick=()=>toast('剧情演示页面，不产生订单');document.querySelectorAll('.s-opt span').forEach(el=>el.onclick=()=>{el.parentElement.querySelectorAll('span').forEach(s=>s.classList.remove('on'));el.classList.add('on')});
+</script></body>
 </html>
