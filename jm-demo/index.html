@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>北岸设备技术回收系统 · 交互原型</title>
+<title>既明 · 技术回收系统</title>
 
 <style>
 :root{
@@ -340,6 +340,10 @@ button:focus-visible,a:focus-visible,input:focus-visible{outline:2px solid #fff;
 #director{position:fixed;right:24px;bottom:20px;z-index:80;display:flex;gap:7px;padding:8px;border:1px solid #ffffff40;border-radius:999px;background:#233248d9;backdrop-filter:blur(20px)}#director button{background:transparent;color:white;border:0;border-radius:20px;padding:8px 12px;font-size:12px}#director button:hover{background:#ffffff20}#hint{display:none}body.capture #director{display:none}body.capture{cursor:none}body.editing [data-edit]{outline:1px dashed #b3e8ec;outline-offset:4px}#editnotice{display:none;position:fixed;bottom:80px;right:30px;z-index:81;background:#233248;padding:12px;border-radius:12px;font-size:12px}body.editing #editnotice{display:block}
 @media(max-width:900px){#sys{grid-template-columns:1fr;grid-template-rows:64px auto minmax(0,1fr);padding:10px;gap:10px}nav{padding:8px;flex-wrap:nowrap}nav a{margin:0}main{padding:16px 4px 75px}.hd-right{gap:6px}.logo{font-size:13px}.logo small{font-size:8px}#clock{display:none}.g2{grid-template-columns:1fr}.card{padding:20px}.dev-head{flex-wrap:wrap}.kv{grid-template-columns:110px 1fr}.s-main{padding:16px}.s-top{padding:12px;flex-wrap:wrap}.s-rel{grid-template-columns:repeat(2,1fr)}#director{right:10px;bottom:10px}.tabs{border-radius:18px}.card{overflow-x:auto}}
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}}
+</style><style>
+.rule-banner{padding:22px 24px;margin:0 0 24px;border-radius:20px;border:1px solid #ffffff52;background:linear-gradient(110deg,#e9f5ff2b,#aec6dc0c);font-size:21px;line-height:1.7;max-width:1000px}.final-rule{max-width:1100px}.final-rule h2{font-size:clamp(24px,2.5vw,38px);font-weight:500;line-height:1.8;margin:28px 0;max-width:900px}.final-rule>p{color:var(--sub);margin-bottom:32px}.final-rule .grid{border-top:1px solid #ffffff30;padding-top:26px;margin-bottom:26px}.final-rule .grid p{line-height:1.8;color:var(--sub)}
+#transportModal{position:fixed;inset:0;z-index:70;background:#18243855;backdrop-filter:blur(8px);display:none;align-items:center;justify-content:center;padding:24px}#transportModal.on{display:flex}.system-dialog{width:min(680px,100%);padding:40px;border-radius:28px;background:linear-gradient(135deg,#637588ee,#2f4055f5);border:1px solid #ffffff70;box-shadow:inset 0 1px #ffffff90,0 30px 90px #13203388}.system-dialog h2{font-size:18px;font-weight:400;color:#dce5ed;margin-bottom:28px}.system-dialog p{font-size:29px;line-height:1.8;margin-bottom:30px}.system-dialog button{float:right}#director{border-radius:18px;max-width:calc(100vw - 20px);flex-wrap:wrap;justify-content:flex-end}#director button{padding:6px 9px}#shotCues{position:fixed;bottom:80px;left:24px;z-index:80;display:flex;gap:6px;flex-wrap:wrap;background:#233248eb;padding:8px;border-radius:16px;max-width:calc(100vw - 48px)}#shotCues button{padding:9px 13px;color:#fff;border:1px solid #ffffff35;border-radius:12px;background:#ffffff12}#shotCues button.active{background:#e5f1fa;color:#223248}body.capture #shotCues{display:none}#connectState{color:#c9f8e8;font-size:13px}.record-overview{display:flex;flex-wrap:wrap;gap:16px;padding:20px 0}.record-overview b{font-size:24px;font-weight:400}.record-overview small{display:block;color:var(--sub);font-size:12px}.record-overview>div{padding-right:24px;border-right:1px solid #ffffff30}.evidence-locked{filter:blur(5px);pointer-events:none;opacity:.35}.memory-detail{position:fixed;inset:0;z-index:71;background:#182438c9;display:grid;place-items:center;padding:30px}.memory-detail>div{max-width:720px;width:100%;padding:30px;background:#42546a;border:1px solid #ffffff65;border-radius:24px}.memory-detail svg{width:100%;max-height:55vh}.thumb{cursor:pointer}.thumb:focus-visible{outline:2px solid white}.thumb svg{height:100%;width:100%;position:absolute;inset:0}.thumb::before{display:none}
+@media(max-width:900px){#shotCues{bottom:115px;left:10px;max-width:calc(100vw - 20px)}.system-dialog{padding:24px}.system-dialog p{font-size:23px}.rule-banner{font-size:18px}.final-rule .grid{gap:30px}#director{bottom:8px}}
 </style></head>
 <body>
 
@@ -369,10 +373,10 @@ button:focus-visible,a:focus-visible,input:focus-visible{outline:2px solid #fff;
     <!-- ===== 01 技术回收页 ===== -->
     <section class="page" id="p1">
       <div class="crumb">RECYCLE / TRANSFER-REQUEST</div>
-      <h1>电脑技术回收 · 转运申请</h1>
-      <p class="lead">研发型设备经指定渠道转运至北岸合作机构，请如实填写设备登记信息。</p>
+      <h1>技术回收登记</h1>
+      <p class="lead">登记后的研发型设备，可经指定渠道转运北岸合作机构</p>
 
-      <div class="steps">
+      <div class="rule-banner">登记后的研发型设备，可经指定渠道转运北岸合作机构</div><div class="steps">
         <div class="step done">① 设备登记</div>
         <div class="step done">② 资料上传</div>
         <div class="step cur" id="st3">③ 转运申请</div>
@@ -481,7 +485,7 @@ button:focus-visible,a:focus-visible,input:focus-visible{outline:2px solid #fff;
           </div>
           <div style="flex:1">
             <div style="font-size:26px;font-weight:700">既明 <span class="mono" style="font-size:14px;color:var(--dim);font-weight:400">JM-07</span></div>
-            <div class="row" style="margin-top:10px;flex-wrap:wrap"><span class="tag t-acc">在线</span><span class="tag t-acc">已绑定用户：林知微</span><span class="tag t-acc">陪伴时长 228 天</span></div>
+            <div class="row" style="margin-top:10px;flex-wrap:wrap"><span class="tag t-acc">在线</span><span class="tag t-acc">已绑定用户：林知微</span><span class="tag t-acc">陪伴时长 227 天</span></div>
           </div>
           <button class="btn btn-g" id="inspect">检查模式</button>
         </div>
@@ -489,7 +493,7 @@ button:focus-visible,a:focus-visible,input:focus-visible{outline:2px solid #fff;
         <div class="alert" id="alert">
           <div class="ic">!</div>
           <div><b>检测到伴侣型功能模块</b>
-          <p>设备存在本地影像、语音记录、长期互动设置与伴侣功能记录，与登记类型「研发型设备」不符。已标记待复核，转运申请暂停。</p></div>
+          <p>设备存在本地影像、语音记录、长期互动设置及用户个人档案，与登记用途不符。违规伴侣收缴，登记人须接受调查与资格核查。</p></div>
         </div>
 
         <div class="tabs">
@@ -526,35 +530,7 @@ button:focus-visible,a:focus-visible,input:focus-visible{outline:2px solid #fff;
       </div>
     </section>
 
-    <!-- ===== 04 设备回收登记 ===== -->
-    <section class="page" id="p4">
-      <div class="crumb">DEVICE / RECYCLE-REGISTER</div>
-      <h1>设备回收登记</h1>
-      <p class="lead">请确认以下条款后完成登记。</p>
-      <div class="grid g2">
-        <div>
-          <div class="clause"><b>一、研发设备登记信息</b>设备编号 JM-07，类型：研发型设备（自组装）。登记人：林知微。回收方式：技术回收程序。</div>
-          <div class="clause hl"><b>二、基础控制系统保留说明</b>经技术回收程序处理的研发型设备，可<u>保留基础控制系统</u>（运动控制、基础感知与系统内核），以供合作机构进行技术评估。基础控制系统不在数据清除范围内。</div>
-          <div class="clause rd"><b>三、伴侣私人数据清除规定</b>设备内涉及用户的本地影像、语音记录、长期互动设置、个人档案及伴侣功能记录，须在回收前全部清除，清除后不可恢复。</div>
-          <label class="chk"><input type="checkbox" id="agree">我已阅读并同意以上条款</label>
-          <div class="row"><button class="btn btn-r" id="wipe">执行私人数据清除</button><button class="btn btn-g">返回</button></div>
-        </div>
-        <div class="card" style="align-self:start">
-          <h3>清除范围</h3>
-          <table id="wipeTbl">
-            <tr><th>项目</th><th>大小</th><th>状态</th></tr>
-            <tr><td>本地影像</td><td class="mono">48.2 GB</td><td><span class="tag t-warn">待清除</span></td></tr>
-            <tr><td>语音记录</td><td class="mono">12.6 GB</td><td><span class="tag t-warn">待清除</span></td></tr>
-            <tr><td>长期互动设置</td><td class="mono">0.3 GB</td><td><span class="tag t-warn">待清除</span></td></tr>
-            <tr><td>个人档案</td><td class="mono">0.1 GB</td><td><span class="tag t-warn">待清除</span></td></tr>
-            <tr><td>伴侣功能记录</td><td class="mono">2.4 GB</td><td><span class="tag t-warn">待清除</span></td></tr>
-            <tr><td>基础控制系统</td><td class="mono">6.8 GB</td><td><span class="tag t-acc">保留</span></td></tr>
-          </table>
-          <div class="note" style="margin-top:14px">清除进度 <span class="mono" id="pct">0%</span></div>
-          <div class="bar"><i id="barI"></i></div>
-        </div>
-      </div>
-    </section>
+<section class="page" id="p4"><div class="crumb">北岸合作机构 / 技术回收规则</div><h1>技术回收登记</h1><p class="lead">设备 JM-07 · 研发型设备（自组装）</p><div class="card final-rule"><span class="tag t-acc">基础控制系统保留</span><h2>研发型设备可保留基础控制系统，按技术回收程序交接</h2><p>适用范围：已登记的研发型设备</p><div class="grid g2"><div><h3>保留范围</h3><p>运动控制、基础感知与系统内核</p></div><div><h3>交接方式</h3><p>关停装箱，委托登记承运</p></div></div><div class="route"><div><b>登记设备</b><small>JM-07</small></div><div class="arrow"></div><div><b>北岸合作机构</b><small>技术回收交接</small></div></div></div><div class="card" style="margin-top:22px"><h3>私人数据处理要求</h3><p class="note">关停交接前，清除未申报的私人数据。基础控制系统不在私人数据清除范围内。</p></div></section><div hidden><input type="checkbox" id="agree"><button id="wipe"></button><table id="wipeTbl"></table><span id="pct"></span><i id="barI"></i></div>
   </main>
 </div>
 
@@ -631,7 +607,7 @@ document.addEventListener('keydown',e=>{
 
 function toast(t){const el=document.getElementById('toast');el.textContent=t;el.classList.add('on');clearTimeout(el._t);el._t=setTimeout(()=>el.classList.remove('on'),2600);}
 
-setInterval(()=>{const d=new Date();document.getElementById('clock').textContent='2041-10-29 '+d.toTimeString().slice(0,8)},1000);
+document.getElementById('clock').textContent='21:07';
 
 // 01 提交
 document.getElementById('submit1').onclick=()=>{
@@ -643,7 +619,7 @@ document.getElementById('submit1').onclick=()=>{
 // 03 影像 & 语音
 const scenes=[['窗边·清晨','#2b3f5c','#c7a46b'],['旧书店','#3d2f28','#a8835a'],['雨天·街口','#1f2d3d','#5f7d99'],['厨房','#3a3328','#d1b48a'],['海边','#1d3a4a','#7fb2c7'],['生日蛋糕','#3b2533','#e0a07a'],['夜晚·台灯','#191d2b','#d6b46a'],['公园长椅','#26392c','#93b07a']];
 document.getElementById('thumbs').innerHTML=scenes.map((s,i)=>`<div class="thumb" style="background:radial-gradient(circle at ${30+i*8}% 35%,${s[2]}55,transparent 55%),linear-gradient(160deg,${s[1]},#0b0f18)"><div class="cap">${s[0]}<small>2041-${String(10-Math.floor(i/3)).padStart(2,'0')}-${String(28-i*3).padStart(2,'0')}</small></div></div>`).join('');
-const voices=[['“知微，今天下雨，记得带伞。”','00:06','10-28 07:12'],['“生日快乐。这是我们认识的第 228 天。”','00:11','10-21 19:06'],['“没关系，我一直都在。”','00:04','10-14 08:22'],['“晚安，明天见。”','00:03','10-13 23:31']];
+const voices=[['“知微，今天下雨，记得带伞。”','00:06','10-28 07:12'],['“生日快乐，知微。”','00:11','10-21 19:06'],['“没关系，我一直都在。”','00:04','10-14 08:22'],['“晚安，明天见。”','00:03','10-13 23:31']];
 document.getElementById('voices').innerHTML=voices.map(v=>`<div class="voice"><button class="play">▶</button><div style="width:300px"><div>${v[0]}</div><div class="mono" style="font-size:12px;color:var(--dim);margin-top:4px">${v[2]} · ${v[1]}</div></div><div class="wave">${Array.from({length:48},()=>`<i style="height:${6+Math.random()*26}px"></i>`).join('')}</div></div>`).join('');
 document.querySelectorAll('.voice .play').forEach(b=>b.onclick=()=>{const v=b.parentElement;const on=!v.classList.contains('playing');document.querySelectorAll('.voice').forEach(x=>{x.classList.remove('playing');x.querySelector('.play').textContent='▶'});if(on){v.classList.add('playing');b.textContent='❚❚';setTimeout(()=>{v.classList.remove('playing');b.textContent='▶'},4000)}});
 
@@ -677,9 +653,9 @@ route();
 <div id="director"><button id="editcopy">编辑文案</button><button id="exportcopy">导出文案</button><button id="resetdemo">重置演示</button><button id="capture">拍摄模式</button></div><div id="editnotice">点击文字修改，退出编辑后自动保存到本机。</div>
 <script>
 const editNodes=[...document.querySelectorAll('h1,h3,.lead,.kv dd,.tl .d,.clause,.s-info h2')];
-let saved={};try{saved=JSON.parse(localStorage.getItem('jm-copy-v2')||'{}')}catch{}
+let saved={};try{saved=JSON.parse(localStorage.getItem('jm-copy-v3')||'{}')}catch{}
 editNodes.forEach((el,i)=>{el.dataset.edit=i;if(saved[i]!==undefined)el.textContent=saved[i]});
-let editing=false;document.getElementById('editcopy').onclick=()=>{editing=!editing;document.body.classList.toggle('editing',editing);editNodes.forEach(el=>el.contentEditable=editing);document.getElementById('editcopy').textContent=editing?'保存文案':'编辑文案';if(!editing){const data={};editNodes.forEach((el,i)=>data[i]=el.textContent);try{localStorage.setItem('jm-copy-v2',JSON.stringify(data));toast('文案已保存在本机')}catch{toast('本机保存不可用，请导出文案')}}};
+let editing=false;document.getElementById('editcopy').onclick=()=>{editing=!editing;document.body.classList.toggle('editing',editing);editNodes.forEach(el=>el.contentEditable=editing);document.getElementById('editcopy').textContent=editing?'保存文案':'编辑文案';if(!editing){const data={};editNodes.forEach((el,i)=>data[i]=el.textContent);try{localStorage.setItem('jm-copy-v3',JSON.stringify(data));toast('文案已保存在本机')}catch{toast('本机保存不可用，请导出文案')}}};
 document.getElementById('exportcopy').onclick=()=>{const text=editNodes.map(el=>el.textContent).join('\n\n');const url=URL.createObjectURL(new Blob([text],{type:'text/plain;charset=utf-8'}));const a=document.createElement('a');a.href=url;a.download='既明-界面文案.txt';a.click();setTimeout(()=>URL.revokeObjectURL(url),500)};
 document.getElementById('capture').onclick=()=>{document.body.classList.add('capture');toast('拍摄模式 · 按 H 恢复工具栏')};
 document.addEventListener('keydown',e=>{if(e.target.isContentEditable||e.target.matches('input,textarea,select'))return;if(e.key.toLowerCase()==='h')document.body.classList.toggle('capture')});
@@ -688,7 +664,28 @@ const draft=[...document.querySelectorAll('button')].find(b=>b.textContent==='�
 try{const fields=JSON.parse(localStorage.getItem('jm-draft')||'null');if(fields)document.querySelectorAll('#p1 input,#p1 select,#p1 textarea').forEach((el,i)=>{if(fields[i]!==undefined)el.value=fields[i]})}catch{}
 const back=[...document.querySelectorAll('#p4 button')].find(b=>b.textContent==='返回');if(back)back.onclick=()=>location.hash='p3';
 document.querySelectorAll('.tog').forEach((el,i)=>{el.setAttribute('aria-label',['主动问候','情绪识别与安抚','长期记忆','称呼偏好'][i]);el.setAttribute('role','switch');el.setAttribute('aria-checked',el.classList.contains('on'));el.addEventListener('click',()=>el.setAttribute('aria-checked',el.classList.contains('on')))});
-document.querySelectorAll('.play').forEach(el=>{el.setAttribute('aria-label','预览语音波形');el.addEventListener('click',()=>toast('语音波形演示，尚未配置实际录音'))});
+document.querySelectorAll('.play').forEach(el=>{el.setAttribute('aria-label','预览语音波形');el.title='语音波形预览'});
 document.querySelector('.s-search button').onclick=()=>toast('剧情商城演示：已显示关节伺服电机');document.querySelector('.s-cart').onclick=()=>toast('演示：已加入购物车');document.querySelector('.s-buy').onclick=()=>toast('剧情演示页面，不产生订单');document.querySelectorAll('.s-opt span').forEach(el=>el.onclick=()=>{el.parentElement.querySelectorAll('span').forEach(s=>s.classList.remove('on'));el.classList.add('on')});
+</script><div id="transportModal" role="dialog" aria-modal="true" aria-labelledby="transportTitle"><div class="system-dialog"><h2 id="transportTitle">设备承运提示</h2><p>无独立身份设备须关停装箱，委托登记承运</p><button class="btn btn-p" id="dismissTransport">我已知晓</button><div style="clear:both"></div></div></div><div id="shotCues"><button data-cue="1">1 登记信息</button><button data-cue="2">2 承运提示</button><button data-cue="3">3 机械元件</button><button data-cue="4">4 设备管理</button><button data-cue="5">5 保留规则</button></div>
+<script>
+const modal=document.getElementById('transportModal');let currentCue=1;
+function cue(n){currentCue=n;modal.classList.remove('on');document.querySelectorAll('[data-cue]').forEach(b=>b.classList.toggle('active',Number(b.dataset.cue)===n));if(n===3){location.hash='shop';mask(true);return}mask(false);const page=n===4?'p3':n===5?'p4':'p1';if(location.hash!=='#'+page)location.hash=page;go(page);if(n===2){modal.classList.add('on');document.getElementById('dismissTransport').focus()}}
+document.querySelectorAll('[data-cue]').forEach(b=>b.onclick=()=>cue(Number(b.dataset.cue)));document.getElementById('dismissTransport').onclick=()=>{modal.classList.remove('on');document.querySelector('[data-cue="2"]').focus()};
+document.addEventListener('keydown',e=>{if(e.target.isContentEditable||e.target.matches('input,textarea,select'))return;if(['1','2','3','4','5'].includes(e.key)){e.preventDefault();e.stopImmediatePropagation();cue(Number(e.key))}else if(e.key==='Escape'&&modal.classList.contains('on')){e.preventDefault();e.stopImmediatePropagation();modal.classList.remove('on')}else if(e.key==='ArrowRight'&&!editing){e.preventDefault();cue(Math.min(5,currentCue+1))}},true);
+document.querySelector('nav').innerHTML='<a href="#p1" data-p="p1"><span>01</span>技术回收登记</a><a href="#p2" data-p="p2"><span>02</span>研发资料与维修记录</a><a href="#p3" data-p="p3"><span>03</span>设备管理</a><a href="#p4" data-p="p4"><span>04</span>技术回收规则</a><div class="foot">设备编号 JM-07<br>登记人 林知微</div>';
+document.querySelectorAll('nav a').forEach(a=>a.addEventListener('click',()=>modal.classList.remove('on')));
+const ct=document.createElement('button');ct.className='btn btn-g';ct.id='connectDevice';ct.textContent='接入设备';document.getElementById('inspect').before(ct);const state=document.createElement('span');state.id='connectState';state.textContent='设备未接入';document.querySelector('.dev-head').after(state);
+const overview=document.createElement('div');overview.className='record-overview';overview.innerHTML='<div><b>1,284</b><small>本地影像</small></div><div><b>3,906</b><small>语音记录</small></div><div><b>4 项</b><small>长期互动设置</small></div><div><b>林知微</b><small>个人档案</small></div>';state.after(overview);
+let connected=false;const tabs=document.querySelector('.tabs');function setConnection(on){connected=on;ct.textContent=on?'断开连接':'接入设备';state.textContent=on?'JM-07 已连接 · 已读取本地记录':'设备未接入';document.querySelectorAll('#p3 .tp').forEach(p=>p.classList.toggle('evidence-locked',!on));tabs.classList.toggle('evidence-locked',!on);overview.classList.toggle('evidence-locked',!on);document.getElementById('inspect').disabled=!on;if(!on){document.getElementById('alert').classList.remove('on');document.querySelectorAll('.tab').forEach(t=>t.classList.remove('flag'))}}
+ct.onclick=()=>setConnection(!connected);setConnection(false);
+const labels=['窗边 · 清晨','旧书店','雨天 · 街口','厨房','海边','生日','夜晚 · 台灯','公园长椅'];
+function sceneSVG(i){const sky=['#9cb4be','#968170','#7798ab','#b19f87','#8bb7bf','#c0a193','#77819b','#8caa9c'][i];return '<svg viewBox="0 0 480 300" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="s'+i+'" x2="0" y2="1"><stop stop-color="'+sky+'"/><stop offset="1" stop-color="#273c50"/></linearGradient></defs><rect width="480" height="300" fill="url(#s'+i+')"/><path d="M0 220 Q120 180 240 220T480 220V300H0Z" fill="#25384a" opacity=".5"/><rect x="28" y="28" width="138" height="180" rx="4" fill="#f3eed921" stroke="#ffffff35"/><path d="M97 28V208M28 118H166" stroke="#ffffff35"/><circle cx="246" cy="116" r="25" fill="#20303e"/><path d="M205 235V171Q246 136 287 171V235" fill="#20303e"/><circle cx="325" cy="125" r="23" fill="#455665"/><path d="M289 237V177Q325 146 361 177V237" fill="#455665"/><path d="M270 201Q284 213 304 200" stroke="#c9d4d9" stroke-width="5" fill="none"/><rect width="480" height="300" fill="#9ab7c210"/></svg>'}
+document.querySelectorAll('.thumb').forEach((t,i)=>{t.insertAdjacentHTML('afterbegin',sceneSVG(i));t.tabIndex=0;t.setAttribute('role','button');t.setAttribute('aria-label','查看影像 '+labels[i]);const open=()=>{if(!connected)return;const dialog=document.createElement('div');dialog.className='memory-detail';dialog.setAttribute('role','dialog');dialog.setAttribute('aria-modal','true');dialog.innerHTML='<div>'+sceneSVG(i)+'<p style="margin:18px 0">'+labels[i]+'</p><button class="btn btn-p">关闭</button></div>';document.body.append(dialog);const close=()=>{dialog.remove();t.focus()};dialog.querySelector('button').onclick=close;dialog.onkeydown=e=>{if(e.key==='Escape'){e.stopPropagation();close()}};dialog.querySelector('button').focus()};t.onclick=open;t.onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();open()}}});
+// Capture clock must remain stable between takes.
+
+document.querySelectorAll('.voice .play').forEach(b=>b.title='语音记录波形预览');
+// Discard V2 copy overrides whose wording may conflict with the supplied script.
+
+cue(location.hash==='#shop'?3:location.hash==='#p3'?4:location.hash==='#p4'?5:1);
 </script></body>
 </html>
