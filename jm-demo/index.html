@@ -344,7 +344,7 @@ button:focus-visible,a:focus-visible,input:focus-visible{outline:2px solid #fff;
 .rule-banner{padding:22px 24px;margin:0 0 24px;border-radius:20px;border:1px solid #ffffff52;background:linear-gradient(110deg,#e9f5ff2b,#aec6dc0c);font-size:21px;line-height:1.7;max-width:1000px}.final-rule{max-width:1100px}.final-rule h2{font-size:clamp(24px,2.5vw,38px);font-weight:500;line-height:1.8;margin:28px 0;max-width:900px}.final-rule>p{color:var(--sub);margin-bottom:32px}.final-rule .grid{border-top:1px solid #ffffff30;padding-top:26px;margin-bottom:26px}.final-rule .grid p{line-height:1.8;color:var(--sub)}
 #transportModal{position:fixed;inset:0;z-index:70;background:#18243855;backdrop-filter:blur(8px);display:none;align-items:center;justify-content:center;padding:24px}#transportModal.on{display:flex}.system-dialog{width:min(680px,100%);padding:40px;border-radius:28px;background:linear-gradient(135deg,#637588ee,#2f4055f5);border:1px solid #ffffff70;box-shadow:inset 0 1px #ffffff90,0 30px 90px #13203388}.system-dialog h2{font-size:18px;font-weight:400;color:#dce5ed;margin-bottom:28px}.system-dialog p{font-size:29px;line-height:1.8;margin-bottom:30px}.system-dialog button{float:right}#director{border-radius:18px;max-width:calc(100vw - 20px);flex-wrap:wrap;justify-content:flex-end}#director button{padding:6px 9px}#shotCues{position:fixed;bottom:80px;left:24px;z-index:80;display:flex;gap:6px;flex-wrap:wrap;background:#233248eb;padding:8px;border-radius:16px;max-width:calc(100vw - 48px)}#shotCues button{padding:9px 13px;color:#fff;border:1px solid #ffffff35;border-radius:12px;background:#ffffff12}#shotCues button.active{background:#e5f1fa;color:#223248}body.capture #shotCues{display:none}#connectState{color:#c9f8e8;font-size:13px}.record-overview{display:flex;flex-wrap:wrap;gap:16px;padding:20px 0}.record-overview b{font-size:24px;font-weight:400}.record-overview small{display:block;color:var(--sub);font-size:12px}.record-overview>div{padding-right:24px;border-right:1px solid #ffffff30}.evidence-locked{filter:blur(5px);pointer-events:none;opacity:.35}.memory-detail{position:fixed;inset:0;z-index:71;background:#182438c9;display:grid;place-items:center;padding:30px}.memory-detail>div{max-width:720px;width:100%;padding:30px;background:#42546a;border:1px solid #ffffff65;border-radius:24px}.memory-detail svg{width:100%;max-height:55vh}.thumb{cursor:pointer}.thumb:focus-visible{outline:2px solid white}.thumb svg{height:100%;width:100%;position:absolute;inset:0}.thumb::before{display:none}
 @media(max-width:900px){#shotCues{bottom:115px;left:10px;max-width:calc(100vw - 20px)}.system-dialog{padding:24px}.system-dialog p{font-size:23px}.rule-banner{font-size:18px}.final-rule .grid{gap:30px}#director{bottom:8px}}
-</style></head>
+</style><style>[hidden]{display:none!important}</style></head>
 <body>
 
 <div id="bgfx"><i></i><i></i><i></i><i></i></div>
@@ -653,9 +653,9 @@ route();
 <div id="director"><button id="editcopy">编辑文案</button><button id="exportcopy">导出文案</button><button id="resetdemo">重置演示</button><button id="capture">拍摄模式</button></div><div id="editnotice">点击文字修改，退出编辑后自动保存到本机。</div>
 <script>
 const editNodes=[...document.querySelectorAll('h1,h3,.lead,.kv dd,.tl .d,.clause,.s-info h2')];
-let saved={};try{saved=JSON.parse(localStorage.getItem('jm-copy-v3')||'{}')}catch{}
+let saved={};try{saved=JSON.parse(localStorage.getItem('jm-copy-v4')||'{}')}catch{}
 editNodes.forEach((el,i)=>{el.dataset.edit=i;if(saved[i]!==undefined)el.textContent=saved[i]});
-let editing=false;document.getElementById('editcopy').onclick=()=>{editing=!editing;document.body.classList.toggle('editing',editing);editNodes.forEach(el=>el.contentEditable=editing);document.getElementById('editcopy').textContent=editing?'保存文案':'编辑文案';if(!editing){const data={};editNodes.forEach((el,i)=>data[i]=el.textContent);try{localStorage.setItem('jm-copy-v3',JSON.stringify(data));toast('文案已保存在本机')}catch{toast('本机保存不可用，请导出文案')}}};
+let editing=false;document.getElementById('editcopy').onclick=()=>{editing=!editing;document.body.classList.toggle('editing',editing);editNodes.forEach(el=>el.contentEditable=editing);document.getElementById('editcopy').textContent=editing?'保存文案':'编辑文案';if(!editing){const data={};editNodes.forEach((el,i)=>data[i]=el.textContent);try{localStorage.setItem('jm-copy-v4',JSON.stringify(data));toast('文案已保存在本机')}catch{toast('本机保存不可用，请导出文案')}}};
 document.getElementById('exportcopy').onclick=()=>{const text=editNodes.map(el=>el.textContent).join('\n\n');const url=URL.createObjectURL(new Blob([text],{type:'text/plain;charset=utf-8'}));const a=document.createElement('a');a.href=url;a.download='既明-界面文案.txt';a.click();setTimeout(()=>URL.revokeObjectURL(url),500)};
 document.getElementById('capture').onclick=()=>{document.body.classList.add('capture');toast('拍摄模式 · 按 H 恢复工具栏')};
 document.addEventListener('keydown',e=>{if(e.target.isContentEditable||e.target.matches('input,textarea,select'))return;if(e.key.toLowerCase()==='h')document.body.classList.toggle('capture')});
@@ -671,7 +671,7 @@ document.querySelector('.s-search button').onclick=()=>toast('剧情商城演示
 const modal=document.getElementById('transportModal');let currentCue=1;
 function cue(n){currentCue=n;modal.classList.remove('on');document.querySelectorAll('[data-cue]').forEach(b=>b.classList.toggle('active',Number(b.dataset.cue)===n));if(n===3){location.hash='shop';mask(true);return}mask(false);const page=n===4?'p3':n===5?'p4':'p1';if(location.hash!=='#'+page)location.hash=page;go(page);if(n===2){modal.classList.add('on');document.getElementById('dismissTransport').focus()}}
 document.querySelectorAll('[data-cue]').forEach(b=>b.onclick=()=>cue(Number(b.dataset.cue)));document.getElementById('dismissTransport').onclick=()=>{modal.classList.remove('on');document.querySelector('[data-cue="2"]').focus()};
-document.addEventListener('keydown',e=>{if(e.target.isContentEditable||e.target.matches('input,textarea,select'))return;if(['1','2','3','4','5'].includes(e.key)){e.preventDefault();e.stopImmediatePropagation();cue(Number(e.key))}else if(e.key==='Escape'&&modal.classList.contains('on')){e.preventDefault();e.stopImmediatePropagation();modal.classList.remove('on')}else if(e.key==='ArrowRight'&&!editing){e.preventDefault();cue(Math.min(5,currentCue+1))}},true);
+document.addEventListener('keydown',e=>{if(e.target.isContentEditable||e.target.matches('input,textarea,select'))return;if(['1','2','3','4','5'].includes(e.key)){e.preventDefault();e.stopImmediatePropagation();cue(Number(e.key))}else if(e.key==='Escape'&&modal.classList.contains('on')){e.preventDefault();e.stopImmediatePropagation();modal.classList.remove('on')}else if(e.key==='ArrowRight'&&!editing){e.preventDefault();cue(Math.min(8,currentCue+1))}},true);
 document.querySelector('nav').innerHTML='<a href="#p1" data-p="p1"><span>01</span>技术回收登记</a><a href="#p2" data-p="p2"><span>02</span>研发资料与维修记录</a><a href="#p3" data-p="p3"><span>03</span>设备管理</a><a href="#p4" data-p="p4"><span>04</span>技术回收规则</a><div class="foot">设备编号 JM-07<br>登记人 林知微</div>';
 document.querySelectorAll('nav a').forEach(a=>a.addEventListener('click',()=>modal.classList.remove('on')));
 const ct=document.createElement('button');ct.className='btn btn-g';ct.id='connectDevice';ct.textContent='接入设备';document.getElementById('inspect').before(ct);const state=document.createElement('span');state.id='connectState';state.textContent='设备未接入';document.querySelector('.dev-head').after(state);
@@ -687,5 +687,77 @@ document.querySelectorAll('.voice .play').forEach(b=>b.title='语音记录波形
 // Discard V2 copy overrides whose wording may conflict with the supplied script.
 
 cue(location.hash==='#shop'?3:location.hash==='#p3'?4:location.hash==='#p4'?5:1);
+</script>
+<style>
+#chatArchive{margin-top:26px;border-top:1px solid #ffffff30;padding-top:24px}.chat-layout{display:grid;grid-template-columns:180px 1fr;min-height:440px}.chat-days{border-right:1px solid #ffffff25;padding-right:18px}.chat-days button{display:block;width:100%;text-align:left;color:white;background:transparent;border:0;padding:16px 12px;border-radius:12px}.chat-days button.selected{background:#ffffff26}.chat-days small{display:block;color:var(--sub);margin-top:5px}.conversation{padding:0 24px;max-height:540px;overflow:auto}.chat-date{text-align:center;font-size:12px;color:var(--sub);margin:8px 0 24px}.message{display:flex;gap:12px;margin:18px 0;align-items:flex-start}.message.mine{flex-direction:row-reverse}.message-avatar{display:grid;place-items:center;width:36px;height:36px;flex:none;border-radius:12px;background:#ffffff20;font-size:12px}.message-body{max-width:75%}.message-name{font-size:11px;color:var(--sub);margin:0 0 6px}.mine .message-name{text-align:right}.bubble{padding:13px 17px;background:#e3edf22b;border:1px solid #ffffff20;border-radius:4px 17px 17px;line-height:1.8;font-size:15px}.mine .bubble{background:#b5e6de40;border-radius:17px 4px 17px 17px}.test-layout{display:grid;grid-template-columns:1fr 1.2fr;gap:24px}.test-status{min-height:230px;padding:28px;border:1px solid #ffffff30;border-radius:20px;background:#2334484d}.test-status h2{font-weight:400;font-size:26px;line-height:1.7;margin:22px 0}.test-status.failed{border-color:#ffb3a1aa;background:#66474735}.console{padding:20px;margin-top:20px;background:#1f2f425e;border-radius:16px;font-family:var(--mono);font-size:12px;line-height:2;white-space:pre-wrap;min-height:160px}.core-object{height:220px;display:grid;place-items:center;background:radial-gradient(ellipse,#b4cfdd35,transparent 65%)}.core-chip{width:160px;height:160px;border:12px ridge #8c9ca8;border-radius:16px;display:grid;place-items:center;transform:rotate(-12deg);background:linear-gradient(130deg,#738897,#293c50);box-shadow:0 22px 40px #17273855;font-size:23px;letter-spacing:3px}.supply-stop{font-size:27px;padding:18px 0;color:#ffd8c6}.recording-video{width:100%;max-height:440px;background:#182637;border-radius:16px}.recording-empty{height:230px;display:grid;place-items:center;color:var(--sub);border:1px dashed #ffffff40;border-radius:18px;margin:18px 0}body.capture .asset-controls{display:none}@media(max-width:900px){.chat-layout,.test-layout{grid-template-columns:1fr}.chat-days{display:flex;border:0;overflow:auto}.chat-days button{min-width:120px}.conversation{padding:10px 0}.message-body{max-width:82%}}
+</style>
+<script>
+// Scene content follows the revised art notes for scenes 13 and 14.
+const archive = document.createElement('section');
+archive.id = 'chatArchive';
+archive.innerHTML = '<h3>聊天记录</h3><div class="chat-layout"><div class="chat-days" id="chatDays"></div><div class="conversation" id="conversation"></div></div>';
+document.querySelector('#p3 .record-overview').after(archive);
+document.querySelector('#p3 .tabs').remove();
+document.querySelectorAll('#p3 .tp').forEach(element => element.remove());
+const historyDays = [
+ {date:'10月28日',subtitle:'下雨也要记得吃饭',messages:[['既明','07:12','外面下雨了，伞放在门边。'],['林知微','07:13','知道啦。你怎么又起这么早'],['既明','07:13','想先把早饭做好。粥还热着。'],['林知微','12:06','中午吃什么呀'],['既明','12:07','冰箱里有你昨天说想吃的番茄。煮面？'],['林知微','12:07','加两个蛋，我马上回来'],['既明','12:08','好，等你。']]},
+ {date:'10月25日',subtitle:'旧书店见',messages:[['林知微','17:32','我好像又逛过头了'],['既明','17:33','还是上次那家旧书店吗？'],['林知微','17:33','嗯……买了三本。真的只有三本'],['既明','17:34','我到门口了。慢慢选。'],['林知微','17:34','那你进来帮我拿一下'],['既明','17:35','好。今晚想吃什么？'],['林知微','17:35','跟你一起吃就行']]},
+ {date:'10月21日',subtitle:'想早点回家',messages:[['林知微','19:03','今天有点累，不想说话'],['既明','19:04','那就先不说。我把灯调暗一点。'],['林知微','19:05','你陪我坐一会儿吧'],['既明','19:05','嗯，我在。'],['林知微','22:41','刚才忘记说了，谢谢你'],['既明','22:42','明天早上想吃甜一点的粥吗？'],['林知微','22:42','想。晚安既明'],['既明','22:43','晚安，知微。']]}
+];
+function showConversation(index) {
+ const day = historyDays[index];
+ const view = document.getElementById('conversation');
+ view.replaceChildren();
+ const date = document.createElement('div'); date.className = 'chat-date'; date.textContent = '2041年' + day.date; view.append(date);
+ day.messages.forEach(([name,time,text]) => {
+  const row = document.createElement('div'); row.className = 'message' + (name === '林知微' ? ' mine' : '');
+  const avatar = document.createElement('div'); avatar.className = 'message-avatar'; avatar.textContent = name === '既明' ? '既明' : '知微';
+  const body = document.createElement('div'); body.className = 'message-body';
+  const label = document.createElement('div'); label.className = 'message-name'; label.textContent = name + '  ' + time;
+  const bubble = document.createElement('div'); bubble.className = 'bubble'; bubble.textContent = text;
+  body.append(label,bubble); row.append(avatar,body); view.append(row);
+ });
+ document.querySelectorAll('#chatDays button').forEach((button,i) => button.classList.toggle('selected',i === index));
+ view.scrollTop = 0;
+}
+historyDays.forEach((day,index) => {const button = document.createElement('button'); button.textContent = day.date; const small = document.createElement('small'); small.textContent = day.subtitle; button.append(small); button.onclick = () => showConversation(index); document.getElementById('chatDays').append(button)});
+showConversation(0);
+const originalConnection = setConnection;
+setConnection = function(on) { originalConnection(on); archive.classList.toggle('evidence-locked',!on); };
+setConnection(false);
+// Replace the preceding summary values to match the records now shown.
+document.querySelector('#p3 .record-overview').innerHTML = '<div><b>既明</b><small>聊天对象</small></div><div><b>本地存储</b><small>记录来源</small></div><div><b>林知微</b><small>绑定用户</small></div>';
+const main = document.querySelector('main');
+main.insertAdjacentHTML('beforeend',
+ '<section class="page" id="p5"><div class="crumb">本地工作台 / 存储卡测试</div><h1>核心运行测试</h1><p class="lead">JM-07 存储卡 · 本地测试装置</p><div class="test-layout"><div class="card"><h3>运行配置</h3><div class="field"><label for="runtimeConfig">配置文件</label><select class="inp" id="runtimeConfig"><option>默认配置</option><option>旧版兼容配置</option><option>自定义配置</option></select></div><div class="field"><label for="configText">配置内容</label><textarea class="inp mono" id="configText" rows="6">core = JM-C03\nmode = local\nmemory = external_card\ncompatibility = default</textarea></div><div class="row"><button class="btn btn-p" id="runTest">运行测试</button><button class="btn btn-g" id="openRecording">旧录像</button></div></div><div class="card"><div class="test-status" id="runtimeStatus" aria-live="polite"><span class="tag t-acc">存储卡已读取</span><h2>等待运行测试</h2><p class="note">检查连接后运行程序</p></div><div class="console" id="runtimeLog">读卡器已连接\n等待运行</div></div></div></section>' +
+ '<section class="page" id="p6"><div class="crumb">核心采购 / 原装配型号</div><h1>核心采购</h1><p class="lead">既明原装配平台</p><div class="grid g2"><div class="card"><div class="core-object"><div class="core-chip">JM-C03</div></div><h3>JM-C03 核心运行平台</h3><p class="note">集成控制核心 · 配套运行环境 · 适配外部存储模块</p></div><div class="card"><h3>供应状态</h3><div class="supply-stop">停止个人供应</div><p class="note">该型号已停止向个人用户供应。</p><dl class="kv" style="margin:28px 0"><dt>核心型号</dt><dd>JM-C03</dd><dt>原装配设备</dt><dd>JM-07</dd><dt>个人采购</dt><dd>供应已停止</dd></dl><button class="btn btn-g" id="returnTest">返回测试窗口</button></div></div></section>' +
+ '<section class="page" id="p7"><div class="crumb">存储卡 / 旧录像</div><h1>旧录像</h1><div class="card"><div id="recordingEmpty" class="recording-empty">选择存储卡中的录像</div><video id="oldRecording" class="recording-video" controls hidden playsinline></video><div class="row asset-controls" style="margin:20px 0"><label class="btn btn-g" for="recordingFile">导入本机录像</label><input type="file" id="recordingFile" accept="video/*" hidden><span id="recordingName" class="note"></span></div><button class="btn btn-g" id="closeRecording">切回测试窗口</button></div></section>'
+);
+pages.push('p5','p6','p7');
+const nav = document.querySelector('nav');
+[['p5','核心运行测试'],['p6','核心采购'],['p7','旧录像']].forEach(([id,title]) => { const a = document.createElement('a'); a.href = '#' + id; a.dataset.p = id; a.textContent = title; nav.insertBefore(a,nav.querySelector('.foot')); });
+const oldCue = cue;
+cue = function(number) {
+ if (number <= 5) {oldCue(number);return;}
+ currentCue = number; modal.classList.remove('on'); mask(false);
+ document.querySelectorAll('[data-cue]').forEach(button => button.classList.toggle('active',Number(button.dataset.cue) === number));
+ const id = 'p' + (number - 1); location.hash = id; go(id);
+};
+[[6,'运行测试'],[7,'核心采购'],[8,'旧录像']].forEach(([number,title]) => {const button = document.createElement('button');button.dataset.cue = number;button.textContent = number + ' ' + title;button.onclick = () => cue(number);document.getElementById('shotCues').append(button)});
+document.addEventListener('keydown',event => {if(event.target.isContentEditable || event.target.matches('input,textarea,select'))return;if(['6','7','8'].includes(event.key)){event.preventDefault();cue(Number(event.key));}},true);
+let attempts = 0;
+document.getElementById('runTest').onclick = () => {
+ attempts += 1;
+ const status = document.getElementById('runtimeStatus'); status.classList.add('failed');
+ status.innerHTML = '<span class="tag t-warn">运行失败</span><h2>缺少兼容核心运行环境</h2><p class="note">无法启动当前存储卡中的程序</p>';
+ document.getElementById('runtimeLog').textContent = '第 ' + attempts + ' 次测试\n读取存储卡……完成\n配置文件 ' + document.getElementById('runtimeConfig').value + '\n检查核心运行环境……失败\n缺少兼容核心运行环境';
+ document.getElementById('runTest').textContent = '重新运行';
+};
+document.getElementById('runtimeConfig').onchange = event => {document.getElementById('configText').value = 'core = JM-C03\nmode = local\nmemory = external_card\ncompatibility = ' + ['default','legacy','custom'][event.target.selectedIndex]};
+document.getElementById('openRecording').onclick = () => cue(8);
+document.getElementById('returnTest').onclick = document.getElementById('closeRecording').onclick = () => {document.getElementById('oldRecording').pause();cue(6)};
+let recordingURL;
+document.getElementById('recordingFile').onchange = event => {const file = event.target.files[0];if(!file)return;if(recordingURL)URL.revokeObjectURL(recordingURL);recordingURL = URL.createObjectURL(file);const video = document.getElementById('oldRecording');video.src = recordingURL;video.hidden = false;document.getElementById('recordingEmpty').hidden = true;document.getElementById('recordingName').textContent = file.name;};
+if(['#p5','#p6','#p7'].includes(location.hash))go(location.hash.slice(1));
 </script></body>
 </html>
