@@ -650,7 +650,7 @@ document.getElementById('wipe').onclick=()=>{
 
 route();
 </script>
-<div id="director"><button id="editcopy">编辑文案</button><button id="exportcopy">导出文案</button><button id="resetdemo">重置演示</button><button id="capture">拍摄模式</button></div><div id="editnotice">点击文字修改，退出编辑后自动保存到本机。</div>
+<div id="director"><button id="editcopy">编辑文案</button><button id="exportcopy">导出文案</button><button id="resetdemo">重置演示</button><button id="fullscreen" aria-pressed="false">进入全屏</button><button id="capture">拍摄模式</button></div><div id="editnotice">点击文字修改，退出编辑后自动保存到本机。</div>
 <script>
 const editNodes=[...document.querySelectorAll('h1,h3,.lead,.kv dd,.tl .d,.clause,.s-info h2')];
 let saved={};try{saved=JSON.parse(localStorage.getItem('jm-copy-v4')||'{}')}catch{}
@@ -759,5 +759,29 @@ document.getElementById('returnTest').onclick = document.getElementById('closeRe
 let recordingURL;
 document.getElementById('recordingFile').onchange = event => {const file = event.target.files[0];if(!file)return;if(recordingURL)URL.revokeObjectURL(recordingURL);recordingURL = URL.createObjectURL(file);const video = document.getElementById('oldRecording');video.src = recordingURL;video.hidden = false;document.getElementById('recordingEmpty').hidden = true;document.getElementById('recordingName').textContent = file.name;};
 if(['#p5','#p6','#p7'].includes(location.hash))go(location.hash.slice(1));
+</script>
+<script>
+const fullscreenButton = document.getElementById('fullscreen');
+function syncFullscreenButton() {
+  const active = Boolean(document.fullscreenElement);
+  fullscreenButton.textContent = active ? '退出全屏' : '进入全屏';
+  fullscreenButton.setAttribute('aria-pressed', String(active));
+}
+fullscreenButton.addEventListener('click', async () => {
+  try {
+    if (document.fullscreenElement) {
+      await document.exitFullscreen();
+    } else if (document.documentElement.requestFullscreen) {
+      await document.documentElement.requestFullscreen();
+    } else {
+      toast('当前浏览器不支持页面全屏，请用浏览器独立窗口或 F11');
+    }
+  } catch {
+    toast('浏览器未允许全屏，请用浏览器独立窗口或 F11');
+  }
+  syncFullscreenButton();
+});
+document.addEventListener('fullscreenchange', syncFullscreenButton);
+syncFullscreenButton();
 </script></body>
 </html>
