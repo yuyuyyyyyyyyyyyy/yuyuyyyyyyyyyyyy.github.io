@@ -1,0 +1,160 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>既明首次激活</title>
+  <style>
+    * { box-sizing: border-box; }
+    html, body { margin: 0; width: 100%; height: 100%; background: #0c0c0c; }
+    body { color: #dedede; font-family: Consolas, "Cascadia Mono", "Microsoft YaHei", monospace; }
+    .window { height: 100%; display: flex; flex-direction: column; }
+    .titlebar { height: 36px; flex: none; background: #202020; padding: 9px 16px; font-size: 13px; color: #c8c8c8; }
+    .titlebar span { color: #888; margin-right: 14px; }
+    #terminal { flex: 1; overflow: auto; padding: 24px 30px 90px; font-size: clamp(15px, 1.65vw, 25px); line-height: 1.5; }
+    .line { white-space: pre-wrap; overflow-wrap: anywhere; min-height: 1.5em; }
+    .warning { color: #f24d4d; }
+    .yellow { color: #e3c263; }
+    .success { color: #dedede; }
+    .cursor { display: inline-block; width: .6em; height: 1.1em; background: #ddd; vertical-align: -.15em; animation: blink 1s steps(1) infinite; }
+    #toolbar { position: fixed; right: 20px; bottom: 18px; display: flex; align-items: center; gap: 8px; padding: 7px; border: 1px solid #444; border-radius: 7px; background: #252525; }
+    button, select { color: #dedede; background: #333; border: 1px solid #555; border-radius: 4px; padding: 8px 12px; font: 13px "Microsoft YaHei", sans-serif; cursor: pointer; }
+    button:hover { background: #484848; }
+    button:focus-visible, select:focus-visible { outline: 2px solid #eee; outline-offset: 3px; }
+    .filming #toolbar { display: none; }
+    .filming { cursor: none; }
+    @keyframes blink { 50% { opacity: 0; } }
+    @media (max-width: 700px) { #terminal { padding: 16px 14px 130px; font-size: 15px; } #toolbar { flex-wrap: wrap; left: 10px; right: 10px; bottom: 10px; } }
+    @media (prefers-reduced-motion: reduce) { .cursor { animation: none; } }
+  </style>
+</head>
+<body>
+  <div class="window">
+    <div class="titlebar"><span>›_</span>命令提示符 — 既明核心服务</div>
+    <main id="terminal" aria-label="既明启动日志"><div id="output"></div><span class="cursor" aria-hidden="true"></span></main>
+  </div>
+  <div id="toolbar">
+    <button id="start">开始激活</button>
+    <button id="pause" disabled>暂停</button>
+    <button id="reset">重置</button>
+    <select id="speed" aria-label="日志速度"><option value="700">正常速度</option><option value="1200">慢速</option><option value="300">快速</option></select>
+    <button id="fullscreen">进入全屏</button>
+    <button id="filming">拍摄模式</button>
+  </div>
+  <script>
+    const output = document.getElementById('output');
+    const terminal = document.getElementById('terminal');
+    const startButton = document.getElementById('start');
+    const pauseButton = document.getElementById('pause');
+    const initialLines = [
+      ['C:\\Users\\LinZhiwei\\JM-07> python server.py'],
+      ['正在加载既明核心服务……'],
+      ['[INIT] 读取设备配置 jm07.config.json'],
+      ['[INIT] 设备编号 JM-07'],
+      ['[INIT] 控制板连接成功'],
+      ['[INIT] 外部存储模块读取成功'],
+      ['[INIT] 载入运动控制模块……完成'],
+      ['[INIT] 载入视觉与语音模块……完成'],
+      ['[INIT] 载入交互记忆模块……完成'],
+      ['[INIT] 等待核心响应……'],
+      ['[CORE] 核心响应正常'],
+      ['=================================================='],
+      ['既明服务器启动成功！', 'success'],
+      ['本机测试：http://127.0.0.1:9333/stats'],
+      ['局域网地址：http://192.168.1.8:9333'],
+      ['=================================================='],
+      [" * Serving Flask app 'jimings_core'"],
+      [' * Debug mode: off'],
+      ['WARNING: This is a development server. Do not use it in a production deployment.', 'warning'],
+      [' * Running on all addresses (0.0.0.0)'],
+      [' * Running on http://127.0.0.1:9333'],
+      [' * Running on http://192.168.1.8:9333'],
+      ['Press CTRL+C to quit', 'yellow'],
+      ['[CORE] 既明已唤醒，等待首次心跳……']
+    ];
+    let timer = null;
+    let running = false;
+    let index = 0;
+    let heartbeat = 0;
+    function addLine(text, className = '') {
+      const line = document.createElement('div');
+      line.className = 'line ' + className;
+      line.textContent = text;
+      output.append(line);
+      if (output.childElementCount > 220) output.firstElementChild.remove();
+      terminal.scrollTop = terminal.scrollHeight;
+    }
+    function heartbeatLine() {
+      const time = new Date(Date.UTC(2041, 2, 16, 20, 17, 2 + heartbeat * 5));
+      const clock = time.toISOString().slice(11, 19);
+      heartbeat += 1;
+      return '192.168.1.11 - - [16/Mar/2041 ' + clock + '] "POST /event/heartbeat HTTP/1.1" 200 -';
+    }
+    function schedule() {
+      clearTimeout(timer);
+      if (running) timer = setTimeout(nextLine, Number(document.getElementById('speed').value));
+    }
+    function nextLine() {
+      if (!running) return;
+      if (index < initialLines.length) {
+        addLine(...initialLines[index]);
+        index += 1;
+      } else {
+        addLine(heartbeatLine());
+      }
+      schedule();
+    }
+    function start() {
+      if (running) return;
+      running = true;
+      startButton.disabled = true;
+      pauseButton.disabled = false;
+      pauseButton.textContent = '暂停';
+      nextLine();
+    }
+    function reset() {
+      clearTimeout(timer);
+      running = false;
+      index = 0;
+      heartbeat = 0;
+      output.replaceChildren();
+      startButton.disabled = false;
+      pauseButton.disabled = true;
+      pauseButton.textContent = '暂停';
+    }
+    startButton.onclick = start;
+    pauseButton.onclick = () => {
+      if (running) {
+        running = false;
+        clearTimeout(timer);
+        pauseButton.textContent = '继续';
+      } else {
+        start();
+      }
+    };
+    document.getElementById('reset').onclick = reset;
+    document.getElementById('speed').onchange = schedule;
+    document.getElementById('filming').onclick = () => document.body.classList.add('filming');
+    const fullscreenButton = document.getElementById('fullscreen');
+    fullscreenButton.onclick = async () => {
+      try {
+        if (document.fullscreenElement) await document.exitFullscreen();
+        else await document.documentElement.requestFullscreen();
+      } catch {
+        fullscreenButton.textContent = '请用 F11 全屏';
+      }
+    };
+    document.addEventListener('fullscreenchange', () => {
+      fullscreenButton.textContent = document.fullscreenElement ? '退出全屏' : '进入全屏';
+    });
+    document.addEventListener('keydown', event => {
+      if (event.target.matches('select,button')) return;
+      if (event.key.toLowerCase() === 'h') document.body.classList.toggle('filming');
+      if (event.key === ' ') { event.preventDefault(); if (!index) start(); else pauseButton.click(); }
+      if (event.key.toLowerCase() === 'r') reset();
+    });
+    // Opening the page starts the sequence for the first-activation shot.
+    start();
+  </script>
+</body>
+</html>
